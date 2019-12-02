@@ -1,29 +1,36 @@
+/* eslint-disable no-tabs */
+/* eslint-disable no-mixed-spaces-and-tabs */
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Router from 'vue-router'
+import Login from '../components/Login'
+import LoginFam from '../components/LoginFam'
+import Dashboard from '../components/infoFam'
 
-Vue.use(VueRouter)
+// const Header = { template: '<div>component header</div>' }
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+Vue.use(Router)
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Login
+    },
+    {
+      path: '/doctor',
+      name: 'Doctor',
+      component: Login
+    },
+    {
+      path: '/family',
+      name: 'Familia',
+      component: LoginFam
+    },
+    {
+      path: '/dashboard',
+      name: 'Familia',
+      component: Dashboard
+    }
+  ]
 })
-
-export default router
