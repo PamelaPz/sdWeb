@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <b-container>
+    <b-container class="container">
        <vuetable ref="vuetable"
           api-url="https://vuetable.ratiw.net/api/users"
           :fields="fields"
@@ -57,5 +57,7 @@ export default {
 </script>
 
 <style>
-
+.container {
+  padding: 3rem 0;
+}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <navbar  />
     <h1 class="title">Inicio de Sesión</h1>
     <b-row align-h="center">
       <b-col cols="6">
@@ -40,7 +41,12 @@
 </template>
 
 <script>
+import navbar from './navbar'
+
 export default {
+  components: {
+    navbar
+  },
   data () {
     return {
       form: {

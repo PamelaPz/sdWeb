@@ -1,8 +1,13 @@
 <template>
-  <div class="app">
-    <b-container>
-        <MyVuetable></MyVuetable>
-    </b-container>
+  <div>
+    <div id="nav">
+      <router-link to="/">Datos</router-link> |
+      <router-link to="/doctor">Estatus</router-link> |
+      <router-link to="/family">Fecha de Visita</router-link>
+      <hr>
+    </div>
+    <h1>Información del Familiar</h1>
+    <MyVuetable></MyVuetable>
   </div>
 </template>
 
