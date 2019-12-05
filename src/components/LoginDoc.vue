@@ -29,8 +29,8 @@
           </div>
           <div class="cont-btn">
             <b-button type="submit" variant="primary">
-              <router-link to="/dashboard-Admin">
-              Enviar
+              <router-link to="/dashboard-Doct">
+                Enviar
               </router-link>
             </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>

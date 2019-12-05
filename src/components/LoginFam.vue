@@ -36,9 +36,11 @@
             </b-form-group>
           </div>
           <div class="cont-btn">
-            <router-link to="/dashboard">
-              <b-button type="submit" variant="primary">Enviar</b-button>
-            </router-link>
+            <b-button type="submit" variant="primary">
+              <router-link to="/dashboard">
+              Enviar
+              </router-link>
+            </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
@@ -69,8 +71,15 @@ export default {
   },
   methods: {
     onSubmit (evt) {
+      if (this.form.name && this.form.email) {
+        return '<router-link to="/dashboard"><router-link>'
+      }
+      this.errors = []
+      if (!this.name && this.form.email) {
+        this.errors.push('El nombre es obligatorio.')
+      }
+      // alert(JSON.stringify(this.form))
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
     },
     onReset (evt) {
       evt.preventDefault()

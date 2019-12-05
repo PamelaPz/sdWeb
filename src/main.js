@@ -6,6 +6,9 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+const VueFire = require('vuefire')
+
+Vue.use(VueFire)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 

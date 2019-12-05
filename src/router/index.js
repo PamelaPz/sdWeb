@@ -3,8 +3,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login'
+import LoginDoc from '../components/LoginDoc'
 import LoginFam from '../components/LoginFam'
-import Dashboard from '../components/infoFam'
+import DashboardF from '../components/infoFam'
+import DashboardAd from '../components/infoAdm'
+import DashboardDo from '../components/infoDoc'
 
 // const Header = { template: '<div>component header</div>' }
 
@@ -20,7 +23,7 @@ export default new Router({
     {
       path: '/doctor',
       name: 'Doctor',
-      component: Login
+      component: LoginDoc
     },
     {
       path: '/family',
@@ -30,7 +33,17 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'Familia',
-      component: Dashboard
+      component: DashboardF
+    },
+    {
+      path: '/dashboard-Admin',
+      name: 'Administrador',
+      component: DashboardAd
+    },
+    {
+      path: '/dashboard-Doct',
+      name: 'Doctor',
+      component: DashboardDo
     }
   ]
 })

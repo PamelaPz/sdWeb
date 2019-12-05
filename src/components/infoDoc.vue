@@ -3,10 +3,11 @@
     <div id="nav">
       <router-link to="/">{{msg1}}</router-link> |
       <router-link to="/doctor">{{msg2}}</router-link> |
-      <router-link to="/family">{{msg3}}</router-link>
+      <router-link to="/family">{{msg3}}</router-link> |
+      <router-link to="/family">{{msg4}}</router-link>
       <hr>
     </div>
-    <h1>Información del Familiar</h1>
+    <h1>Doctor</h1>
     <MyVuetable></MyVuetable>
   </div>
 </template>
@@ -20,9 +21,10 @@ export default {
   },
   data () {
     return {
-      msg1: 'Datos personales',
-      msg2: 'Estatus',
-      msg3: 'Fechas de Visita'
+      msg1: 'Pacientes',
+      msg2: 'Historial',
+      msg3: 'Familiares',
+      msg4: 'Datos Personales'
     }
   }
 }
