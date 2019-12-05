@@ -9,8 +9,6 @@ import DashboardF from '../components/infoFam'
 import DashboardAd from '../components/infoAdm'
 import DashboardDo from '../components/infoDoc'
 
-// const Header = { template: '<div>component header</div>' }
-
 Vue.use(Router)
 
 export default new Router({
