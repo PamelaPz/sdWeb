@@ -2,26 +2,20 @@
   <div class="login">
     <navbar  />
     <h1 class="title">Inicio de Sesión</h1>
+    <p class="title" v-for="message in messages" :key="message.email">{{message.email + ' ' + message.password + ' ' + message.id_personaltype}}</p>
+    <!-- <p class="title" v-for="message in messages" :key="message.password"></p> -->
     <b-row align-h="center">
       <b-col cols="6">
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form @submit.prevent="login" @reset="onReset">
           <div class="form">
-            <b-form-group id="input-group-1" label="Nombre Completo:" label-for="input-1">
+
+            <b-form-group id="input-group-1" label="Correo:" label-for="input-1" required>
               <b-form-input
                 id="input-1"
-                v-model="form.name"
-                required
-                placeholder="Juan Rivera de la Cruz"
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="input-group-2" label="Correo Electrónico:" label-for="input-2">
-              <b-form-input
-                id="input-2"
                 v-model="form.email"
                 type="email"
                 required
-                placeholder="ejemplo@gmail.com"
+                placeholder="jesypz.15@gmail.com"
               ></b-form-input>
             </b-form-group>
 
@@ -31,19 +25,20 @@
                 v-model="form.pass"
                 type="password"
                 required
-                placeholder="••••••••"
+                placeholder="•••••••••••"
               ></b-form-input>
             </b-form-group>
           </div>
           <div class="cont-btn">
             <b-button type="submit" variant="primary">
-              <router-link to="/dashboard">
+              <!-- <router-link to="/dashboard-Admin"> -->
               Enviar
-              </router-link>
+              <!-- </router-link> -->
             </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
+        <pre> {{$data}} </pre>
         <!-- <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ form }}</pre>
         </b-card> -->
@@ -54,6 +49,12 @@
 
 <script>
 import navbar from './navbar'
+import { all } from '../data/message'
+import * as firebase from 'firebase/app'
+// const db = firebase.firestore()
+// var personal = db.collection('personal')
+
+// console.log(personal);
 
 export default {
   components: {
@@ -63,35 +64,32 @@ export default {
     return {
       form: {
         email: '',
-        name: '',
         pass: ''
-      },
-      show: true
+      }
+    }
+  },
+  subscriptions () {
+    return {
+      messages: all()
     }
   },
   methods: {
-    onSubmit (evt) {
-      if (this.form.name && this.form.email) {
-        return '<router-link to="/dashboard"><router-link>'
-      }
-      this.errors = []
-      if (!this.name && this.form.email) {
-        this.errors.push('El nombre es obligatorio.')
-      }
-      // alert(JSON.stringify(this.form))
-      evt.preventDefault()
-    },
     onReset (evt) {
       evt.preventDefault()
       // Reset our form values
       this.form.email = ''
-      this.form.name = ''
       this.form.pass = ''
       // Trick to reset/clear native browser form validation state
       this.show = false
       this.$nextTick(() => {
         this.show = true
       })
+    },
+    login () {
+      firebase.auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.pass)
+        .then((user) => this.$router.replace('dashboard'),
+          (error) => console.log(error))
     }
   }
 }

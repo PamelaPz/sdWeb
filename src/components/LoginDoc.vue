@@ -2,18 +2,19 @@
   <div class="login">
     <navbar  />
     <h1 class="title">Inicio de Sesión</h1>
+    <!-- <li v-for="message in messages" :key="message.name"><p class="title">{{message.name}}</p></li> -->
     <b-row align-h="center">
       <b-col cols="6">
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form @submit.prevent="login" @reset="onReset">
           <div class="form">
 
-            <b-form-group id="input-group-1" label="Matrícula:" label-for="input-1">
+            <b-form-group id="input-group-1" label="Correo:" label-for="input-1" required>
               <b-form-input
                 id="input-1"
-                v-model="form.matricula"
-                type="text"
+                v-model="form.email"
+                type="email"
                 required
-                placeholder="JPPP021598"
+                placeholder="jesy.15@gmail.com"
               ></b-form-input>
             </b-form-group>
 
@@ -29,13 +30,14 @@
           </div>
           <div class="cont-btn">
             <b-button type="submit" variant="primary">
-              <router-link to="/dashboard-Doct">
-                Enviar
-              </router-link>
+              <!-- <router-link to="/dashboard-Admin"> -->
+              Enviar
+              <!-- </router-link> -->
             </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
+        <pre> {{$data}} </pre>
         <!-- <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ form }}</pre>
         </b-card> -->
@@ -46,35 +48,46 @@
 
 <script>
 import navbar from './navbar'
+import { all } from '../data/message'
+import * as firebase from 'firebase/app'
 
 export default {
   components: {
     navbar
   },
+  subscriptions () {
+    return {
+      messages: all()
+    }
+  },
+  // created () {
+  // all().subscribe(() => {})
+  // },
   data () {
     return {
       form: {
-        matricula: '',
+        email: '',
         pass: ''
-      },
-      show: true
+      }
     }
   },
   methods: {
-    onSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
-    },
     onReset (evt) {
       evt.preventDefault()
       // Reset our form values
-      this.form.matricula = ''
+      this.form.email = ''
       this.form.pass = ''
       // Trick to reset/clear native browser form validation state
       this.show = false
       this.$nextTick(() => {
         this.show = true
       })
+    },
+    login () {
+      firebase.auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.pass)
+        .then((user) => this.$router.replace('dashboardDoct'),
+          (error) => console.log(error))
     }
   }
 }
