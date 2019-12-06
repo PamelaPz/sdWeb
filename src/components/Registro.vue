@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="header">
+    <div id="header">
       <div class="nav">
         <router-link to="/login">Log In</router-link>
       </div>
@@ -37,5 +37,8 @@ export default {
     display: flex;
     justify-content: flex-end;
   }
+}
+h1.title {
+  padding: 1rem 0 2rem;
 }
 </style>
