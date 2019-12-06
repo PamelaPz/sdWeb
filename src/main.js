@@ -3,8 +3,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import * as firebase from 'firebase/app'
-import Rx from 'rxjs'
-import VueRx from 'vue-rx'
+// import Rx from 'rxjs'
+// import VueRx from 'vue-rx'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -22,7 +22,7 @@ var config = ({
 firebase.initializeApp(config)
 
 Vue.use(BootstrapVue)
-Vue.use(VueRx, Rx)
+// Vue.use(VueRx, Rx)
 Vue.config.productionTip = false
 
 firebase.auth().onAuthStateChanged(function(user){

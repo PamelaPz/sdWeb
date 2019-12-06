@@ -2,10 +2,8 @@
   <div class="login">
     <navbar  />
     <h1 class="title">Inicio de Sesión</h1>
-    <p class="title" v-for="message in messages" :key="message.email">{{message.email + ' ' + message.password + ' ' + message.id_personaltype}}</p>
-    <!-- <p class="title" v-for="message in messages" :key="message.password"></p> -->
     <b-row align-h="center">
-      <b-col cols="6">
+      <b-col cols="4">
         <b-form @submit.prevent="login" @reset="onReset">
           <div class="form">
 
@@ -31,17 +29,12 @@
           </div>
           <div class="cont-btn">
             <b-button type="submit" variant="primary">
-              <!-- <router-link to="/dashboard-Admin"> -->
               Enviar
-              <!-- </router-link> -->
             </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
         <pre> {{$data}} </pre>
-        <!-- <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ form }}</pre>
-        </b-card> -->
       </b-col>
     </b-row>
   </div>
@@ -49,12 +42,9 @@
 
 <script>
 import navbar from './navbar'
-import { all } from '../data/message'
-import * as firebase from 'firebase/app'
-// const db = firebase.firestore()
-// var personal = db.collection('personal')
-
-// console.log(personal);
+// import { all } from '../data/message'
+// import * as firebase from 'firebase/app'
+// import 'firebase/firestore'
 
 export default {
   components: {
@@ -66,11 +56,6 @@ export default {
         email: '',
         pass: ''
       }
-    }
-  },
-  subscriptions () {
-    return {
-      messages: all()
     }
   },
   methods: {
@@ -86,10 +71,7 @@ export default {
       })
     },
     login () {
-      firebase.auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('dashboard'),
-          (error) => console.log(error))
+      console.log('Hii')
     }
   }
 }

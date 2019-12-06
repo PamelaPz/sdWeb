@@ -9,6 +9,7 @@ import LoginAdm from '../components/LoginAdm'
 import DashboardF from '../components/infoFam'
 import DashboardAd from '../components/infoAdm'
 import DashboardDo from '../components/infoDoc'
+import Registro from '../components/Registro'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: LoginAdm
+    },
+    {
+      path: '/registro',
+      name: 'Registro',
+      component: Registro
     },
     {
       path: '/doctor',
@@ -70,8 +76,9 @@ router.beforeEach((to, from, next) => {
 
   if (autorizacion && !usuario) {
     next('login')
+    // next('registro')
   } else if (!autorizacion && usuario) {
-    next('dashboard')
+    next('dashboardAdmin')
   } else {
     next()
   }

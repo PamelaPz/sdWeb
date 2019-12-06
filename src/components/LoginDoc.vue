@@ -4,7 +4,7 @@
     <h1 class="title">Inicio de Sesión</h1>
     <!-- <li v-for="message in messages" :key="message.name"><p class="title">{{message.name}}</p></li> -->
     <b-row align-h="center">
-      <b-col cols="6">
+      <b-col cols="4">
         <b-form @submit.prevent="login" @reset="onReset">
           <div class="form">
 
@@ -48,20 +48,15 @@
 
 <script>
 import navbar from './navbar'
-import { all } from '../data/message'
+// import { all } from '../data/message'
 import * as firebase from 'firebase/app'
 
 export default {
   components: {
     navbar
   },
-  subscriptions () {
-    return {
-      messages: all()
-    }
-  },
   // created () {
-  // all().subscribe(() => {})
+  //   return all()
   // },
   data () {
     return {

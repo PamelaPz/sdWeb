@@ -2,9 +2,14 @@
 <div id="app">
   <b-container fluid>
     <div id="nav">
-      <router-link to="/">Administrador</router-link> |
-      <router-link to="/doctor">Doctor</router-link> |
-      <router-link to="/family">Familia</router-link>
+      <div class="nav">
+        <div>
+          <router-link to="/">Administrador</router-link> |
+          <router-link to="/doctor">Doctor</router-link> |
+          <router-link to="/family">Familia</router-link>
+        </div>
+        <router-link to="/registro">Registro</router-link>
+      </div>
       <hr>
     </div>
     <router-view/>
@@ -24,6 +29,10 @@
   }
   hr {
     border: 1px solid rgba(44, 62, 80, 0.8);
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
