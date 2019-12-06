@@ -2,11 +2,11 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import Vue from 'vue'
 import Router from 'vue-router'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import LoginFam from '../components/LoginFam'
 import LoginDoc from '../components/LoginDoc'
 import LoginAdm from '../components/LoginAdm'
-import DashboardF from '../components/infoFam'
+import DashboardFm from '../components/infoFam'
 import DashboardAd from '../components/infoAdm'
 import DashboardDo from '../components/infoDoc'
 import Registro from '../components/Registro'
@@ -15,6 +15,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
+    // Refireccionamiento
     {
       path: '*',
       redirect: '/login'
@@ -23,11 +24,13 @@ const router = new Router({
       path: '/',
       redirect: '/login'
     },
+    // Registro
     {
       path: '/login',
       name: 'Login',
       component: LoginAdm
     },
+    // Inicios de Sesión
     {
       path: '/registro',
       name: 'Registro',
@@ -35,24 +38,25 @@ const router = new Router({
     },
     {
       path: '/doctor',
-      name: 'Doctor',
+      name: 'LoginDoctor',
       component: LoginDoc
     },
     {
       path: '/family',
-      name: 'Familia',
+      name: 'LoginFamilia',
       component: LoginFam
     },
+    // Página principal
     {
-      path: '/dashboard',
+      path: '/Fam',
       name: 'Familia',
-      component: DashboardF,
+      component: DashboardFm,
       meta: {
         autentificado: true
       }
     },
     {
-      path: '/dashboardAdmin',
+      path: '/Adm',
       name: 'Administrador',
       component: DashboardAd,
       meta: {
@@ -60,7 +64,7 @@ const router = new Router({
       }
     },
     {
-      path: '/dashboardDoct',
+      path: '/Doc',
       name: 'Doctor',
       component: DashboardDo,
       meta: {
@@ -76,9 +80,11 @@ router.beforeEach((to, from, next) => {
 
   if (autorizacion && !usuario) {
     next('login')
-    // next('registro')
+    next('registro')
   } else if (!autorizacion && usuario) {
-    next('dashboardAdmin')
+    next('Adm')
+    next('Fam')
+    next('Doc')
   } else {
     next()
   }

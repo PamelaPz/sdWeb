@@ -34,7 +34,7 @@
 
 <script>
 import { app } from '../firebase'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 const db = firebase.firestore(app)

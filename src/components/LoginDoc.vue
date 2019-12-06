@@ -49,7 +49,7 @@
 <script>
 import navbar from './navbar'
 // import { all } from '../data/message'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 
 export default {
   components: {
@@ -81,7 +81,7 @@ export default {
     login () {
       firebase.auth()
         .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('dashboardDoct'),
+        .then((user) => this.$router.replace('Doc'),
           (error) => console.log(error))
     }
   }

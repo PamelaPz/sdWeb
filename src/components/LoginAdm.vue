@@ -48,27 +48,25 @@
 
 <script>
 import navbar from './navbar'
-import { all } from '../data/message'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
+
+import { app } from '../firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
+const db = firebase.firestore(app)
 
 export default {
   components: {
     navbar
   },
-  subscriptions () {
-    return {
-      messages: all()
-    }
-  },
-  // created () {
-  // all().subscribe(() => {})
-  // },
   data () {
     return {
       form: {
         email: '',
         pass: ''
-      }
+      },
+      type: ''
     }
   },
   methods: {
@@ -86,8 +84,19 @@ export default {
     login () {
       firebase.auth()
         .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('dashboardAdmin'),
+        .then((user) => this.$router.replace('Adm'),
           (error) => console.log(error))
+      // db.collection("cities").where("capital", "==", true)
+      //   .get()
+      //   .then(function(querySnapshot) {
+      //       querySnapshot.forEach(function(doc) {
+      //           // doc.data() is never undefined for query doc snapshots
+      //           console.log(doc.id, " => ", doc.data());
+      //       });
+      //   })
+      //   .catch(function(error) {
+      //       console.log("Error getting documents: ", error);
+      //   });
     }
   }
 }

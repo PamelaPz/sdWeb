@@ -43,7 +43,7 @@
 <script>
 import navbar from './navbar'
 // import { all } from '../data/message'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 // import 'firebase/firestore'
 
 export default {
@@ -73,7 +73,7 @@ export default {
     login () {
       firebase.auth()
         .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('dashboardAdmin'),
+        .then((user) => this.$router.replace('Fam'),
           (error) => console.log(error))
     }
   }
