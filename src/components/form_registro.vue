@@ -66,9 +66,13 @@ export default {
         name: this.form.name,
         id_personaltype: this.form.selected
       }
-      db.collection('personal').doc('persona').set(docData).then(function () {
-        console.log('Document successfully written!')
-      })
+      db.collection('personal').add(docData)
+        .then(function (docRef) {
+          console.log('Document written with ID: ', docRef.id)
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error)
+        })
       firebase.auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.pass)
         .then((user) => this.$router.replace('login'),
