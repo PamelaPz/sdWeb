@@ -2,6 +2,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import firebase from 'firebase/app'
 import LoginFam from '../components/LoginFam'
 import LoginDoc from '../components/LoginDoc'
@@ -15,7 +16,6 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // Refireccionamiento
     {
       path: '*',
       redirect: '/login'
@@ -24,13 +24,11 @@ const router = new Router({
       path: '/',
       redirect: '/login'
     },
-    // Registro
     {
       path: '/login',
       name: 'Login',
       component: LoginAdm
     },
-    // Inicios de Sesión
     {
       path: '/registro',
       name: 'Registro',
@@ -46,7 +44,6 @@ const router = new Router({
       name: 'LoginFamilia',
       component: LoginFam
     },
-    // Página principal
     {
       path: '/Fam',
       name: 'Familia',
@@ -80,11 +77,8 @@ router.beforeEach((to, from, next) => {
 
   if (autorizacion && !usuario) {
     next('login')
-    next('registro')
   } else if (!autorizacion && usuario) {
     next('Adm')
-    next('Fam')
-    next('Doc')
   } else {
     next()
   }

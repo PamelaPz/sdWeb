@@ -12,7 +12,7 @@
         </b-form-group>
 
         <b-form-group id="input-group-4" label="Contraseña:" label-for="input-4">
-          <b-form-input id="input-4" v-model="form.pass" type="password" required placeholder="••••••••"></b-form-input>
+          <b-form-input id="input-4" v-model="form.pass" type="password" required placeholder="Mínimo 6 caracteres"></b-form-input>
         </b-form-group>
 
         <b-form-group id="input-group-3" label="Tipo de personal:" label-for="input-3">

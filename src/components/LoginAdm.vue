@@ -1,14 +1,13 @@
 <template>
   <div class="login">
-    <navbar  />
-    <h1 class="title">Inicio de Sesión</h1>
-    <!-- <li v-for="message in messages" :key="message.name"><p class="title">{{message.name}}</p></li> -->
+    <navbar />
+    <h1 class="title">Administrador</h1>
     <b-row align-h="center">
       <b-col cols="4">
         <b-form @submit.prevent="login" @reset="onReset">
           <div class="form">
 
-            <b-form-group id="input-group-1" label="Correo:" label-for="input-1" required>
+            <b-form-group id="input-group-1" label="Correo:" label-for="input-1">
               <b-form-input
                 id="input-1"
                 v-model="form.email"
@@ -30,17 +29,11 @@
           </div>
           <div class="cont-btn">
             <b-button type="submit" variant="primary">
-              <!-- <router-link to="/dashboard-Admin"> -->
               Enviar
-              <!-- </router-link> -->
             </b-button>
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
-        <pre> {{$data}} </pre>
-        <!-- <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ form }}</pre>
-        </b-card> -->
       </b-col>
     </b-row>
   </div>
@@ -49,10 +42,8 @@
 <script>
 import navbar from './navbar'
 import firebase from 'firebase/app'
-
-import { app } from '../firebase'
-import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { app } from '../firebase'
 
 const db = firebase.firestore(app)
 
@@ -64,9 +55,9 @@ export default {
     return {
       form: {
         email: '',
-        pass: ''
-      },
-      type: ''
+        pass: '',
+        type: 'oEz3LEWd3PAQzghOeVcs'
+      }
     }
   },
   methods: {
@@ -82,21 +73,29 @@ export default {
       })
     },
     login () {
-      firebase.auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('Adm'),
-          (error) => console.log(error))
-      // db.collection("cities").where("capital", "==", true)
-      //   .get()
-      //   .then(function(querySnapshot) {
-      //       querySnapshot.forEach(function(doc) {
-      //           // doc.data() is never undefined for query doc snapshots
-      //           console.log(doc.id, " => ", doc.data());
-      //       });
-      //   })
-      //   .catch(function(error) {
-      //       console.log("Error getting documents: ", error);
-      //   });
+      var email = this.form.email
+      var pass = this.form.pass
+      var tipo = this.form.type
+      db.collection('personal').where('email', '==', email)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            var valid = (doc.id, ' => ', doc.data().id_personaltype)
+            if (valid === tipo) {
+              console.log('Mach exacto')
+              firebase.auth()
+                .signInWithEmailAndPassword(email, pass)
+                .then((user) => this.$router.push('Adm'),
+                  (error) => alert('Datos incorrectos ', error))
+            } else {
+              alert('Datos incorrectos o perfil iválido')
+            }
+          })
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
     }
   }
 }

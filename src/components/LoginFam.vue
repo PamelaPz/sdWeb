@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <navbar  />
-    <h1 class="title">Inicio de Sesión</h1>
+    <h1 class="title">Familia</h1>
     <b-row align-h="center">
       <b-col cols="4">
         <b-form @submit.prevent="login" @reset="onReset">
