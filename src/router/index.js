@@ -4,18 +4,22 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import firebase from 'firebase/app'
+// Logins
 import LoginFam from '../components/LoginFam'
 import LoginDoc from '../components/LoginDoc'
 import LoginAdm from '../components/LoginAdm'
+// Página principal
 import DashboardFm from '../components/infoFam'
 import DashboardAd from '../components/infoAdm'
 import DashboardDo from '../components/infoDoc'
+// Registro
 import Registro from '../components/Registro'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+    // Redireccionamiento
     {
       path: '*',
       redirect: '/login'
@@ -24,15 +28,17 @@ const router = new Router({
       path: '/',
       redirect: '/login'
     },
-    {
-      path: '/login',
-      name: 'Login',
-      component: LoginAdm
-    },
+    // Registro
     {
       path: '/registro',
       name: 'Registro',
       component: Registro
+    },
+    // Logins
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginAdm
     },
     {
       path: '/doctor',
@@ -44,6 +50,7 @@ const router = new Router({
       name: 'LoginFamilia',
       component: LoginFam
     },
+    // Páginas principales
     {
       path: '/Fam',
       name: 'Familia',

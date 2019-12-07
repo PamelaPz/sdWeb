@@ -40,10 +40,11 @@
 </template>
 
 <script>
-import navbar from './navbar'
-import firebase from 'firebase/app'
 import 'firebase/firestore'
+import navbar from './navbar'
+import router from '../router'
 import { app } from '../firebase'
+import firebase from 'firebase/app'
 
 const db = firebase.firestore(app)
 
@@ -86,7 +87,7 @@ export default {
               console.log('Match exacto')
               firebase.auth()
                 .signInWithEmailAndPassword(email, pass)
-                .then((user) => this.$router.replace('Doc'),
+                .then((user) => router.replace('Doc'),
                   (error) => alert('Datos incorrectos ', error))
             } else {
               alert('Datos incorrectos o perfil iválido')

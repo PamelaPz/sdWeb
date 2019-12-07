@@ -34,17 +34,19 @@
             <b-button type="reset" variant="danger">Borrar</b-button>
           </div>
         </b-form>
-        <pre> {{$data}} </pre>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
+import 'firebase/firestore'
 import navbar from './navbar'
-// import { all } from '../data/message'
+import router from '../router'
+import { app } from '../firebase'
 import firebase from 'firebase/app'
-// import 'firebase/firestore'
+
+const db = firebase.firestore(app)
 
 export default {
   components: {
@@ -54,7 +56,8 @@ export default {
     return {
       form: {
         email: '',
-        pass: ''
+        pass: '',
+        type: ''
       }
     }
   },
@@ -71,10 +74,29 @@ export default {
       })
     },
     login () {
-      firebase.auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.pass)
-        .then((user) => this.$router.replace('Fam'),
-          (error) => console.log(error))
+      var email = this.form.email
+      var pass = this.form.pass
+      db.collection('family').where('email', '==', email)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            var validEmail = (doc.id, ' => ', doc.data().email)
+            var validPass = (doc.id, ' => ', doc.data().password)
+            if (validEmail === email && validPass === pass) {
+              console.log('Mach exacto')
+              firebase.auth()
+                .signInWithEmailAndPassword(email, pass)
+                .then((user) => router.replace('Fam'),
+                  (error) => alert('Datos incorrectos ', error))
+            } else {
+              alert('Datos incorrectos o perfil inválido')
+            }
+          })
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
     }
   }
 }
