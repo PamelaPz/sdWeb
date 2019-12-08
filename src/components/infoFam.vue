@@ -76,57 +76,6 @@ export default {
     logout () {
       firebase.auth().signOut()
         .then(() => this.$router.replace('login'))
-    },
-    click () {
-      db.collection('patients').get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          var id = (doc.id)
-          db.collection('family').where('id_patients', '==', id).get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-              var datos = (doc.id, ' => ', doc.data())
-              console.log(datos)
-              var namep = ''
-              var name = (doc.id, ' => ', doc.data().family_name)
-              var direccion = (doc.id, ' => ', doc.data().address)
-              var email = (doc.id, ' => ', doc.data().email)
-              var idpaciente = (doc.id, ' => ', doc.data().id_patients)
-
-              var x = document.createElement('tr')
-              var t = document.createTextNode('Nombre de tutor: ' + name)
-              x.appendChild(t)
-              document.getElementById('familia').appendChild(x)
-              // --------------------------------------------------
-              var a = document.createElement('tr')
-              var b = document.createTextNode('Dirección: ' + direccion)
-              a.appendChild(b)
-              document.getElementById('familia').appendChild(a)
-              // --------------------------------------------------
-              var c = document.createElement('tr')
-              var d = document.createTextNode('Correo: ' + email)
-              c.appendChild(d)
-              document.getElementById('familia').appendChild(c)
-              // --------------------------------------------------
-              namep = namePaciente(idpaciente)
-              var e = document.createElement('tr')
-              var f = document.createTextNode('Paciente a quien visita: ' + namep)
-              e.appendChild(f)
-              document.getElementById('familia').appendChild(e)
-              // --------------------------------------------------
-              var k = document.createElement('br')
-              document.getElementById('familia').appendChild(k)
-
-              function namePaciente (x) {
-                db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
-                  querySnapshot.forEach(function (doc) {
-                    namep = doc.data().name
-                    return namep
-                  })
-                }) // Entry
-              }
-            })
-          }) // Family
-        })
-      }) // Patients
     }
   }
 }
