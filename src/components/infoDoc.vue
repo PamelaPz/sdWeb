@@ -1,38 +1,55 @@
 <template>
   <div>
-    <div id="nav">
+    <div id="navInside">
       <div class="nav">
-        <b-col cols="6" class="content-nav">
-          <router-link to="/">{{msg1}}</router-link> |
-          <router-link to="/doctor">{{msg2}}</router-link> |
-          <router-link to="/family">{{msg3}}</router-link> |
-          <router-link to="/family">{{msg4}}</router-link>
-        </b-col>
-      <a href="#" @click="logout">Salir</a>
+        <div>
+          <h2>Bienvenido</h2>
+          <p id="nameUser"></p>
+        </div>
+        <a href="#" @click="logout">Salir</a>
       </div>
       <hr>
     </div>
-    <h1>Doctor</h1>
-    <MyVuetable></MyVuetable>
+    <div class="contenido">
+      <h1>Doctor</h1>
+    </div>
   </div>
 </template>
 
 <script>
-import MyVuetable from './table'
-import firebase from 'firebase'
+import { app } from '../firebase'
+import firebase from 'firebase/app'
+
+const db = firebase.firestore(app)
 
 export default {
   name: 'app',
   components: {
-    MyVuetable
   },
   data () {
     return {
       msg1: 'Pacientes',
       msg2: 'Historial',
       msg3: 'Familiares',
-      msg4: 'Datos Personales'
+      msg4: 'Datos Personales',
+      userid: this.$route.params.id
     }
+  },
+  mounted () {
+    var id = this.userid
+    console.log(id)
+    db.collection('personal').where('id_personaltype', '==', id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          var name = doc.data().name
+          document.getElementById('nameUser').innerHTML = name
+          console.log(name)
+        })
+      })
+      .catch(function (error) {
+        console.log('Error getting document:', error)
+      })
   },
   methods: {
     logout () {
@@ -58,5 +75,8 @@ export default {
     display: flex;
     justify-content: space-between;
   }
+}
+.contenido {
+  padding: 10rem 2rem;
 }
 </style>

@@ -108,7 +108,6 @@
 </template>
 
 <script>
-// import router from '../router'
 import { app } from '../firebase'
 import firebase from 'firebase/app'
 
@@ -295,7 +294,7 @@ export default {
                 function namePaciente (x) {
                   db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
-                      namep = doc.data().name
+                      namep = (doc.id, ' => ', doc.data().name)
                       return namep
                     })
                   }) // Entry
