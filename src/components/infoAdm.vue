@@ -54,7 +54,7 @@
             <b-card-body>
               <b-card-text>
                 <h5>Lista de Pacientes</h5>
-                <div id="infoPacientes"></div>
+                <div id="infoPaciente"></div>
               </b-card-text>
             </b-card-body>
           </b-collapse>
@@ -62,33 +62,42 @@
 
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block href="#" v-b-toggle.accordion-3 variant="info">Familiares</b-button>
+            <b-button @click="clickToogle('Familia')" block href="#" v-b-toggle.accordion-3 variant="info">Familiares</b-button>
           </b-card-header>
           <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
             <b-card-body>
-              <b-card-text>{{ text }}</b-card-text>
+              <b-card-text>
+                <h5>Lista de familiares registrados</h5>
+                <div id="familia"></div>
+              </b-card-text>
             </b-card-body>
           </b-collapse>
         </b-card>
 
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block href="#" v-b-toggle.accordion-4 variant="info">Farmacia</b-button>
+            <b-button @click="clickToogle('Farmacia')" block href="#" v-b-toggle.accordion-4 variant="info">Farmacia</b-button>
           </b-card-header>
           <b-collapse id="accordion-4" accordion="my-accordion" role="tabpanel">
             <b-card-body>
-              <b-card-text>{{ text }}</b-card-text>
+              <b-card-text>
+                <h5>La Farmacia cuenta con los siguientes medicamentos y su respectiva información de retiro y abastecimiento.</h5>
+                <div id="farmacia"></div>
+              </b-card-text>
             </b-card-body>
           </b-collapse>
         </b-card>
 
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block href="#" v-b-toggle.accordion-5 variant="info">Talleres</b-button>
+            <b-button @click="clickToogle('Talleres')" block href="#" v-b-toggle.accordion-5 variant="info">Talleres</b-button>
           </b-card-header>
           <b-collapse id="accordion-5" accordion="my-accordion" role="tabpanel">
             <b-card-body>
-              <b-card-text>{{ text }}</b-card-text>
+              <b-card-text>
+                <h5>Talleres en existencia</h5>
+                <div id="talleres"></div>
+              </b-card-text>
             </b-card-body>
           </b-collapse>
         </b-card>
@@ -112,16 +121,6 @@ export default {
   },
   data () {
     return {
-      text: `
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-        tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-        wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-        vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-        synth nesciunt you probably haven't heard of them accusamus labore VHS.
-      `,
       msg1: 'Personal del Hospital',
       msg2: 'Familia de pacientes',
       msg3: 'Pacientes',
@@ -204,22 +203,188 @@ export default {
             console.log('Error getting document:', error)
           })
       } else if (x === 'Pacientes') {
+        db.collection('entry').get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            var data = (doc.id, ' => ', doc.data())
+            // var name = (doc.id, ' => ', doc.data().name)
+            var idPaciente = (doc.id, ' => ', doc.data().id_patients)
+            // var idDoctor = (doc.id, ' => ', doc.data().id_personal)
+            // var idFamilia = (doc.id, ' => ', doc.data().id_family)
+            console.log(data)
+            // console.log('Nombre: ' + name)
+            // console.log(idPaciente)
+            // console.log(idDoctor)
+            // console.log(idFamilia)
+            // var x = document.createElement('p')
+            // var t = document.createTextNode(name)
+            // x.appendChild(t)
+            // document.getElementById('infoPaciente').appendChild(x)
+            db.collection('patients').get().then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                var estatus = (doc.id, ' => ', doc.data())
+                console.log(estatus)
+                // var x = document.createElement('p')
+                // var t = document.createTextNode(internado)
+                // x.appendChild(t)
+                // document.getElementById('infoPaciente').appendChild(x)
+              })
+            }) // Record
+            db.collection('record').where('id_patients', '==', idPaciente).get().then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                var medicina = (doc.id, ' => ', doc.data())
+                console.log(medicina)
+                // var x = document.createElement('p')
+                // var t = document.createTextNode(internado)
+                // x.appendChild(t)
+                // document.getElementById('infoPaciente').appendChild(x)
+              })
+            }) // Record
+          })
+        }) // Entry
+        // db.collection('patients').get().then(function (querySnapshot) {
+        //   querySnapshot.forEach(function (doc) {
+        //     var IDPaciente = (doc.id)
+        //     var doctor = doc.data().id_personal
+        //     var estatus = doc.data().id_status
+        //     var internado = 'Sí'
+        //     console.log(IDPaciente + '/' + doctor + '/' + estatus)
+        //     if (!doc.data().intership) {
+        //       internado = 'No'
+        //     }
+        //     // Imprimir si está internado
+        //     var x = document.createElement('p')
+        //     var t = document.createTextNode(' ' + internado)
+        //     x.appendChild(t)
+        //     document.getElementById('infoPaciente').appendChild(x)
+        //   })
+        // })
+      } else if (x === 'Familia') {
         db.collection('patients').get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            var internado = 'Sí'
-            if (!doc.data().intership) {
-              internado = 'No'
-            }
-            var fecha = Date.parse(doc.data().date_egress)
-            var x = document.createElement('p')
-            var t = document.createTextNode(fecha + ' | ' + ' INTERNADO: ' + internado)
+            var id = (doc.id)
+            db.collection('family').where('id_patients', '==', id).get().then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                var datos = (doc.id, ' => ', doc.data())
+                console.log(datos)
+                var namep = ''
+                var name = (doc.id, ' => ', doc.data().family_name)
+                var direccion = (doc.id, ' => ', doc.data().address)
+                var email = (doc.id, ' => ', doc.data().email)
+                var idpaciente = (doc.id, ' => ', doc.data().id_patients)
+
+                var x = document.createElement('tr')
+                var t = document.createTextNode('Nombre de tutor: ' + name)
+                x.appendChild(t)
+                document.getElementById('familia').appendChild(x)
+                // --------------------------------------------------
+                var a = document.createElement('tr')
+                var b = document.createTextNode('Dirección: ' + direccion)
+                a.appendChild(b)
+                document.getElementById('familia').appendChild(a)
+                // --------------------------------------------------
+                var c = document.createElement('tr')
+                var d = document.createTextNode('Correo: ' + email)
+                c.appendChild(d)
+                document.getElementById('familia').appendChild(c)
+                // --------------------------------------------------
+                namep = namePaciente(idpaciente)
+                var e = document.createElement('tr')
+                var f = document.createTextNode('Paciente a quien visita: ' + namep)
+                e.appendChild(f)
+                document.getElementById('familia').appendChild(e)
+                // --------------------------------------------------
+                var k = document.createElement('br')
+                document.getElementById('familia').appendChild(k)
+
+                function namePaciente (x) {
+                  db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                      namep = doc.data().name
+                      return namep
+                    })
+                  }) // Entry
+                }
+              })
+            }) // Family
+          })
+        }) // Patients
+      } else if (x === 'Talleres') {
+        db.collection('workshop').get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            // var data = (doc.id, ' => ', doc.data())
+            var name = (doc.id, ' => ', doc.data().name)
+            var orador = (doc.id, ' => ', doc.data().speaker)
+            var ubicacion = (doc.id, ' => ', doc.data().location)
+            var capacidad = (doc.id, ' => ', doc.data().capacity)
+            var cantidad = (doc.id, ' => ', doc.data().quantity)
+            var publico = (doc.id, ' => ', doc.data().public)
+            var x = document.createElement('tr')
+            var t = document.createTextNode('Título: ' + name)
             x.appendChild(t)
-            document.getElementById('infoPacientes').appendChild(x)
+            document.getElementById('talleres').appendChild(x)
+            // --------------------------------------------------
+            var a = document.createElement('tr')
+            var b = document.createTextNode('Conferencista: ' + orador)
+            a.appendChild(b)
+            document.getElementById('talleres').appendChild(a)
+            // --------------------------------------------------
+            var c = document.createElement('tr')
+            var d = document.createTextNode('Ubicación: ' + ubicacion)
+            c.appendChild(d)
+            document.getElementById('talleres').appendChild(c)
+            // --------------------------------------------------
+            var e = document.createElement('tr')
+            var f = document.createTextNode('Capacidad para ' + capacidad + ' personas')
+            e.appendChild(f)
+            document.getElementById('talleres').appendChild(e)
+            // --------------------------------------------------
+            var g = document.createElement('tr')
+            var h = document.createTextNode('Cantidad: ' + cantidad)
+            g.appendChild(h)
+            document.getElementById('talleres').appendChild(g)
+            // --------------------------------------------------
+            var i = document.createElement('tr')
+            var j = document.createTextNode('Público diriguido: ' + publico)
+            i.appendChild(j)
+            document.getElementById('talleres').appendChild(i)
+            // --------------------------------------------------
+            var k = document.createElement('br')
+            document.getElementById('talleres').appendChild(k)
           })
-        })
-          .catch(function (error) {
-            console.log('Error getting document:', error)
+        }) // Talleres
+      } else if (x === 'Farmacia') {
+        db.collection('drugstore').get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            // var data = (doc.id, ' => ', doc.data())
+            var name = (doc.id, ' => ', doc.data().name)
+            var existencia = (doc.id, ' => ', doc.data().stock)
+            var retiro = (doc.id, ' => ', doc.data().catering)
+            var abastecer = (doc.id, ' => ', doc.data().retirement)
+
+            var x = document.createElement('tr')
+            var t = document.createTextNode('Nombre: ' + name)
+            x.appendChild(t)
+            document.getElementById('farmacia').appendChild(x)
+            // --------------------------------------------------
+            var a = document.createElement('tr')
+            var b = document.createTextNode('Existencias: ' + existencia)
+            a.appendChild(b)
+            document.getElementById('farmacia').appendChild(a)
+            // --------------------------------------------------
+            var c = document.createElement('tr')
+            var d = document.createTextNode('Retiro: ' + retiro)
+            c.appendChild(d)
+            document.getElementById('farmacia').appendChild(c)
+            // --------------------------------------------------
+            var e = document.createElement('tr')
+            var f = document.createTextNode('Abastecimiento de ' + abastecer)
+            e.appendChild(f)
+            document.getElementById('farmacia').appendChild(e)
+            // --------------------------------------------------
+            var k = document.createElement('br')
+            document.getElementById('farmacia').appendChild(k)
           })
+        }) // Talleres
       }
     }
   }
@@ -239,6 +404,7 @@ export default {
   width: 97%;
   padding: 30px 30px 0 30px;
   background-color: white;
+  z-index: 5;
   .nav {
     display: flex;
     justify-content: space-between;
