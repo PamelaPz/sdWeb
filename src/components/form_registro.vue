@@ -65,12 +65,15 @@ export default {
         name: this.form.name,
         id_personaltype: this.form.selected
       }
-      firebase.auth()
+
+      firebase
+        .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.pass)
-        .then(
-          (user) =>
-            db.collection('personal').doc(user).set(docData, { merge: true }),
-          (error) => console.log(error))
+        .then(response => {
+          console.log(response)
+          db.collection('personal').doc(response.user.uid).set(docData)
+        })
+        .catch(errors => console.log(errors))
     },
     onReset (evt) {
       evt.preventDefault()
