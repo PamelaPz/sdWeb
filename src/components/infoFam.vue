@@ -11,12 +11,26 @@
       <hr>
     </div>
     <div class="contenido">
-      <h1>Información del Familiar</h1>
       <div id="familia">
-        <b>Nombre de tutor: </b><p id="name"> </p>
-        <b>Dirección: </b><p id="address"> </p>
-        <b>Correp</b><p id="email"> </p>
-        <b>Paciente a quien visita</b><p id="patient"> </p>
+        <b-container>
+          <h1 class="title">Información del Familiar</h1>
+          <hr>
+          <table style="width:100%">
+            <tr>
+              <th>Nombre tutor</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th>Visita a</th>
+            </tr>
+            <tr>
+              <td id="name"></td>
+              <td id="address"></td>
+              <td id="email"></td>
+              <td id="patient"></td>
+            </tr>
+          </table>
+          <hr>
+        </b-container>
       </div>
     </div>
   </div>
@@ -117,5 +131,8 @@ export default {
 }
 .contenido {
   padding: 10rem 2rem;
+  .title {
+    padding: 1rem 0;
+  }
 }
 </style>

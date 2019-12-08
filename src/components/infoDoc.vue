@@ -6,23 +6,39 @@
           <h2>Bienvenido</h2>
           <p id="nameUser"></p>
         </div>
-        <a href="#" @click="logout">Salir</a>
+        <div>
+          <router-link to="/registro" class="router"> Registrar paciente </router-link>
+          <a href="#" @click="logout">Salir</a>
+        </div>
       </div>
       <hr>
     </div>
     <div class="contenido">
-      <h1>Doctor</h1>
-      <p>Pacientes asignados</p>
-      <b>Nombre</b><p id="nombrePA"> </p>
-      <b>Internado</b><p id="internado"> </p>
-      <b>Estatus</b><p id="estatus"> </p>
-      <div>
-        <b> <i> HISTORIAL</i> </b> <br>
-        <b>Dosis: </b><p id="dosis"> </p>
-        <b>Medicina:</b><p id="medicina"> </p>
-        <b>Observaciones: </b><p id="observa"> </p>
-      </div>
-      <hr>
+      <b-container>
+        <h1 class="title">Información de Pacientes</h1>
+        <p>Pacientes asignados</p>
+        <hr>
+        <table style="width:100%">
+          <tr>
+            <th>Nombre</th>
+            <th>Internado</th>
+            <th>Estatus</th>
+            <th colspan="3">HISTORIAL</th>
+          </tr>
+          <tr>
+            <td id="nombrePA"></td>
+            <td id="internado"></td>
+            <td id="estatus"></td>
+            <td>Dosis<p id="dosis"></p></td>
+            <td>Medicina<p id="medicina"></p></td>
+            <td>Observaciones<p id="observa"></p></td>
+          </tr>
+          <tr>
+          </tr>
+        </table>
+        <hr>
+        <b-button type="button primary" onclick="javascript:window.print()">Imprimir</b-button>
+      </b-container>
     </div>
   </div>
 </template>
@@ -59,47 +75,20 @@ export default {
           var name = doc.data().name // Nombre de quién inicia sesión
           var idDoc = doc.id
           document.getElementById('nameUser').innerHTML = name
-          if (idDoc === id) {
+          if (idDoc === id) { // Si el id del usuario coincide
             db.collection('status').get().then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
-                var idStatus = doc.id
-                var infoSta = doc.data().stage
-                // console.log(infoSta + idStatus)
-                db.collection('patients').where('id_personal', '==', id)
+                // var idStatus = doc.id
+                // var infoSta = doc.data().stage // Extraemos información de estatus
+                db.collection('patients').where('id_personal', '==', id) // Existen coincidencias entre doctor y paciente
                   .get()
                   .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                       let datoPA = doc.id // Id del paciente asignado
-                      var status = doc.data().id_status
-                      var inter = doc.data().intership
-                      if (idStatus === status) {
-                        db.collection('record').where('id_patients', '==', datoPA)
-                          .get()
-                          .then(function (querySnapshot) {
-                            querySnapshot.forEach(function (doc) {
-                              var dosis = doc.data().dose
-                              var medicina = doc.data().medicine
-                              var observa = doc.data().observations
-                              db.collection('entry').where('id_patients', '==', datoPA)
-                                .get()
-                                .then(function (querySnapshot) {
-                                  querySnapshot.forEach(function (doc) {
-                                    var internado = 'Sí'
-                                    if (!inter) {
-                                      internado = 'No'
-                                    }
-                                    var namePaci = (doc.id, ' => ', doc.data().name)
-                                    document.getElementById('nombrePA').innerHTML = namePaci
-                                    document.getElementById('internado').innerHTML = internado
-                                    document.getElementById('estatus').innerHTML = infoSta
-                                    document.getElementById('dosis').innerHTML = dosis
-                                    document.getElementById('medicina').innerHTML = medicina
-                                    document.getElementById('observa').innerHTML = observa
-                                  })
-                                }) // Entry
-                            })
-                          }) // Record
-                      }
+                      var idpersonal = doc.data().id_personal
+                      // var status = doc.data().id_status
+                      // var inter = doc.data().intership
+                      console.log(idpersonal + datoPA)
                     })
                   }) // Patients
               })
@@ -134,6 +123,9 @@ export default {
   .content-nav {
     display: flex;
     justify-content: space-between;
+  }
+  .router {
+    padding: 0 5rem;
   }
 }
 .contenido {
