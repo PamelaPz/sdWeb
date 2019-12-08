@@ -56,8 +56,7 @@ export default {
     return {
       form: {
         email: '',
-        pass: '',
-        type: ''
+        pass: ''
       }
     }
   },
@@ -83,11 +82,12 @@ export default {
             // doc.data() is never undefined for query doc snapshots
             var validEmail = (doc.id, ' => ', doc.data().email)
             var validPass = (doc.id, ' => ', doc.data().password)
+            var name = (doc.id, ' => ', doc.data().family_name)
             if (validEmail === email && validPass === pass) {
               console.log('Mach exacto')
               firebase.auth()
                 .signInWithEmailAndPassword(email, pass)
-                .then((user) => router.replace('Fam'),
+                .then((user) => router.push({ name: 'Familia', params: { name: name } }),
                   (error) => alert('Datos incorrectos ', error))
             } else {
               alert('Datos incorrectos o perfil inválido')

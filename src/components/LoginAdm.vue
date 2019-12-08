@@ -87,7 +87,7 @@ export default {
               console.log('Mach exacto')
               firebase.auth()
                 .signInWithEmailAndPassword(email, pass)
-                .then((user) => router.push({ name: 'Administrador', params: { id: (doc.id) } }),
+                .then((user) => router.push({ name: 'Administrador', params: { id: valid } }),
                   (error) => alert('Datos incorrectos ', error))
             } else {
               alert('Datos incorrectos o perfil inválido')

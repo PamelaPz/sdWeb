@@ -2,13 +2,14 @@
   <div>
     <div id="navInside">
       <div class="nav">
-        <h1>Bienvenido</h1>
+        <div>
+          <h2>Bienvenido</h2>
+          <p id="nameUser"></p>
+        </div>
         <a href="#" @click="logout">Salir</a>
       </div>
       <hr>
     </div>
-    <header>
-    </header>
     <div class="contenido">
       <div role="tablist">
         <b-card no-body class="mb-1">
@@ -81,7 +82,7 @@
           <b-collapse id="accordion-4" accordion="my-accordion" role="tabpanel">
             <b-card-body>
               <b-card-text>
-                <h5>La Farmacia cuenta con los siguientes medicamentos y su respectiva información de retiro y abastecimiento.</h5>
+                <h5>La Farmacia cuenta con los siguientes medicamentos con su respectiva información de retiro y abastecimiento.</h5>
                 <div id="farmacia"></div>
               </b-card-text>
             </b-card-body>
@@ -107,7 +108,6 @@
 </template>
 
 <script>
-// import MyVuetable from './table'
 // import router from '../router'
 import { app } from '../firebase'
 import firebase from 'firebase/app'
@@ -115,35 +115,31 @@ import firebase from 'firebase/app'
 const db = firebase.firestore(app)
 
 export default {
-  name: 'app',
-  components: {
-    // MyVuetable
-  },
   data () {
     return {
       msg1: 'Personal del Hospital',
       msg2: 'Familia de pacientes',
       msg3: 'Pacientes',
       msg4: 'Farmacia',
-      msg5: 'Talleres'
+      msg5: 'Talleres',
+      userid: this.$route.params.id
     }
   },
   mounted () {
-    // const data = this.$route.params.id
-    // console.log(data)
-    // var docRef = db.collection('personal').doc(data)
-
-    // docRef.get().then(function (doc) {
-    //   if (doc.exists) {
-    //     // console.log('Document data:', doc.data().)
-    //     console.log('Document data:', doc.data().name)
-    //   } else {
-    //     // doc.data() will be undefined in this case
-    //     console.log('No such document!')
-    //   }
-    // }).catch(function (error) {
-    //   console.log('Error getting document:', error)
-    // })
+    var id = this.userid
+    console.log(id)
+    db.collection('personal').where('id_personaltype', '==', id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          var name = doc.data().name
+          document.getElementById('nameUser').innerHTML = name
+          console.log(name)
+        })
+      })
+      .catch(function (error) {
+        console.log('Error getting document:', error)
+      })
   },
   methods: {
     logout () {
@@ -426,7 +422,7 @@ export default {
   }
 }
 .contenido {
-  padding: 8rem 2rem;
+  padding: 10rem 2rem;
   text-align: left;
   .btn_inside {
     margin-right: 1rem;
