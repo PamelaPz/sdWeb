@@ -78,17 +78,50 @@ export default {
           if (idDoc === id) { // Si el id del usuario coincide
             db.collection('status').get().then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
-                // var idStatus = doc.id
-                // var infoSta = doc.data().stage // Extraemos información de estatus
+                var idStatus = doc.id
+                var infoSta = doc.data().stage // Extraemos información de estatus
                 db.collection('patients').where('id_personal', '==', id) // Existen coincidencias entre doctor y paciente
                   .get()
                   .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                       let datoPA = doc.id // Id del paciente asignado
-                      var idpersonal = doc.data().id_personal
-                      // var status = doc.data().id_status
-                      // var inter = doc.data().intership
-                      console.log(idpersonal + datoPA)
+                      // var idpersonal = doc.data().id_personal
+                      var status = doc.data().id_status
+                      var inter = doc.data().intership
+
+                      if (idStatus === status) {
+                        db.collection('record').where('id_patients', '==', datoPA)
+                          .get()
+                          .then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
+                              var dosis = doc.data().dose
+                              var medicina = doc.data().medicine
+                              var observa = doc.data().observations
+                              db.collection('entry').where('id_patients', '==', datoPA)
+                                .get()
+                                .then(function (querySnapshot) {
+                                  querySnapshot.forEach(function (doc) {
+                                    var internado = 'Sí'
+                                    if (!inter) {
+                                      internado = 'No'
+                                    }
+                                    var namePaci = (doc.id, ' => ', doc.data().name)
+                                    var i = 0
+                                    var th = document.createElement("")
+                                    while (i <= 2) {
+                                      document.getElementById('nombrePA').innerHTML = namePaci
+                                      document.getElementById('internado').innerHTML = internado
+                                      document.getElementById('estatus').innerHTML = infoSta
+                                      document.getElementById('dosis').innerHTML = dosis
+                                      document.getElementById('medicina').innerHTML = medicina
+                                      document.getElementById('observa').innerHTML = observa
+                                      i++
+                                    }
+                                  })
+                                }) // Entry
+                            })
+                          }) // Record
+                      } // End IF
                     })
                   }) // Patients
               })
