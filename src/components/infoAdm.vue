@@ -11,7 +11,7 @@
       <hr>
     </div>
     <b-container class="contenido">
-      <div class="section personal">
+      <div class="section personal" id="doctores">
         <h3>Personal</h3>
         <p>Selecciona una de las opciones a continuación para mostrar información necesaria</p>
         <h5>Infomación de Doctores</h5>
@@ -28,8 +28,9 @@
           </tr>
         </table>
         <hr>
+        <b-button type="button primary" @click="print('reporteDoctores', 'doctores')">Imprimir</b-button>
       </div>
-      <div class="section personal">
+      <div class="section personal" id="enfermeras">
         <h5>Infomación de Enfermeras</h5>
         <b-button @click="clickToogle('Enfermera')" variant="warning">Ver Enfermeras</b-button>
         <hr>
@@ -44,8 +45,9 @@
           </tr>
         </table>
         <hr>
+        <b-button type="button primary" @click="print('reporteEnfermeras', 'enfermeras')">Imprimir</b-button>
       </div>
-      <div class="section personal">
+      <div class="section" id="seguridad">
         <h5>Infomación de Seguridad</h5>
         <b-button @click="clickToogle('Seguridad')" variant="dark">Ver Seguridad</b-button>
         <hr>
@@ -60,11 +62,35 @@
           </tr>
         </table>
         <hr>
+        <b-button type="button primary" @click="print('reporteSeguridad', 'seguridad')">Imprimir</b-button>
       </div>
-      <div class="section">
-        <h5>Lista de Pacientes</h5>
-        <b-button @click="clickToogle('Pacientes')">Pacientes</b-button>
-        <div id="infoPaciente"></div>
+      <div class="section" id="pacientes">
+        <h5>Información de Pacientes</h5>
+        <b-button @click="clickToogle('Pacientes')" variant="success">Pacientes</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Internado</th>
+            <th>Estatus</th>
+            <th>Doctor asignado</th>
+            <th>Egreso</th>
+            <th colspan="4">Historial</th>
+          </tr>
+          <tr>
+            <td id="nombreP"></td>
+            <td id="internadoP"></td>
+            <td id="statusP"></td>
+            <td id="doctorP"></td>
+            <td id="egresoP"></td>
+            <td id="historialP"></td>
+            <td id="medicina"></td>
+            <td id="dosis"></td>
+            <td id="horario"></td>
+          </tr>
+        </table>
+        <hr>
+        <b-button type="button primary" @click="print('reportePacientes','pacientes')">Imprimir</b-button>
       </div>
       <div class="section">
         <h3>Familiares</h3>
@@ -139,6 +165,9 @@
 </template>
 
 <script>
+/* eslint-disable */
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 import { app } from '../firebase'
 import firebase from 'firebase/app'
 
@@ -157,7 +186,6 @@ export default {
   },
   mounted () {
     var id = this.userid
-    console.log(id)
     db.collection('personal').where('id_personaltype', '==', id)
       .get()
       .then(function (querySnapshot) {
@@ -171,6 +199,15 @@ export default {
       })
   },
   methods: {
+    print (n, id) {
+      var name = n
+      var doc = new jsPDF('p', 'pt', 'a4')
+      html2canvas(document.getElementById(id), { scale: 8 }).then(canvas => {
+        var x = canvas.toDataURL('image/jpeg', 1)
+        doc.addImage(x, 'JPEG', 50, 50, 500, 400)
+        doc.save(n + '.pdf')
+      })
+    },
     logout () {
       firebase.auth().signOut()
         .then(() => this.$router.replace('login'))
@@ -251,61 +288,101 @@ export default {
             console.log('Error getting document:', error)
           })
       } else if (x === 'Pacientes') {
-        db.collection('entry').get().then(function (querySnapshot) {
+        db.collection('personal').get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            var data = (doc.id, ' => ', doc.data())
-            // var name = (doc.id, ' => ', doc.data().name)
-            var idPaciente = (doc.id, ' => ', doc.data().id_patients)
-            // var idDoctor = (doc.id, ' => ', doc.data().id_personal)
-            // var idFamilia = (doc.id, ' => ', doc.data().id_family)
-            console.log(data)
-            // console.log('Nombre: ' + name)
-            // console.log(idPaciente)
-            // console.log(idDoctor)
-            // console.log(idFamilia)
-            // var x = document.createElement('p')
-            // var t = document.createTextNode(name)
-            // x.appendChild(t)
-            // document.getElementById('infoPaciente').appendChild(x)
-            db.collection('patients').get().then(function (querySnapshot) {
+            var idPersonal = doc.id
+            var personalName = doc.data().name
+            db.collection('status').get().then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
-                var estatus = (doc.id, ' => ', doc.data())
-                console.log(estatus)
-                // var x = document.createElement('p')
-                // var t = document.createTextNode(internado)
-                // x.appendChild(t)
-                // document.getElementById('infoPaciente').appendChild(x)
+                var idStatus = doc.id
+                var infoSta = doc.data().stage // Extraemos información de estatus
+                db.collection('patients').get() // Existen coincidencias entre doctor y paciente
+                  .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                      var datoPA = doc.id // Id del paciente asignado
+                      var status = doc.data().id_status
+                      var inter = doc.data().intership
+                      var egress = doc.data().date_egress
+                      var personal = doc.data().id_personal // Id de Doctor Asignado
+                      if (idStatus === status) {
+                        if (idPersonal === personal) {
+                          db.collection('record').where('id_patients', '==', datoPA)
+                            .get()
+                            .then(function (querySnapshot) {
+                              querySnapshot.forEach(function (doc) {
+                                console.log('Id Paciente: ' + datoPA)
+                                var dosis = doc.data().dose
+                                var medicina = doc.data().medicine
+                                var observa = doc.data().observations
+                                db.collection('entry').where('id_patients', '==', datoPA)
+                                  .get()
+                                  .then(function (querySnapshot) {
+                                    querySnapshot.forEach(function (doc) {
+                                      var internado = 'Sí'
+                                      if (!inter) {
+                                        internado = 'No'
+                                      }
+                                      var namePaci = (doc.id, ' => ', doc.data().name)
+                                      console.log(namePaci)
+                                      var a = document.createElement('td')
+                                      a.innerHTML = namePaci
+                                      document.getElementById('nombreP').appendChild(a)
+                                      var b = document.createElement('tr')
+                                      document.getElementById('nombreP').appendChild(b)
+                                      // -------------------------------------------------------
+                                      var c = document.createElement('td')
+                                      c.innerHTML = internado
+                                      document.getElementById('internadoP').appendChild(c)
+                                      var d = document.createElement('tr')
+                                      document.getElementById('internadoP').appendChild(d)
+                                      // --------------------------------------------------
+                                      var m = document.createElement('td')
+                                      m.innerHTML = personalName
+                                      document.getElementById('doctorP').appendChild(m)
+                                      var n = document.createElement('tr')
+                                      document.getElementById('doctorP').appendChild(n)
+                                      // --------------------------------------------------
+                                      var o = document.createElement('td')
+                                      o.innerHTML = egress
+                                      document.getElementById('egresoP').appendChild(o)
+                                      var p = document.createElement('tr')
+                                      document.getElementById('egresoP').appendChild(p)
+                                      // --------------------------------------------------
+                                      var e = document.createElement('td')
+                                      e.innerHTML = infoSta
+                                      document.getElementById('statusP').appendChild(e)
+                                      var f = document.createElement('tr')
+                                      document.getElementById('statusP').appendChild(f)
+                                      // --------------------------------------------------
+                                      var g = document.createElement('td')
+                                      g.innerHTML = 'Dosis: ' + dosis
+                                      document.getElementById('dosis').appendChild(g)
+                                      var h = document.createElement('tr')
+                                      document.getElementById('dosis').appendChild(h)
+                                      // --------------------------------------------------
+                                      var i = document.createElement('td')
+                                      i.innerHTML = 'Medicina: ' + medicina
+                                      document.getElementById('medicina').appendChild(i)
+                                      var j = document.createElement('tr')
+                                      document.getElementById('medicina').appendChild(j)
+                                      // --------------------------------------------------
+                                      var k = document.createElement('td')
+                                      k.innerHTML = 'Observaciones: ' + '<br>' + observa
+                                      document.getElementById('horario').appendChild(k)
+                                      var l = document.createElement('tr')
+                                      document.getElementById('horario').appendChild(l)
+                                    })
+                                  }) // Entry
+                              })
+                            }) // Record
+                        } // En d IF Personal
+                      } // End IF Status
+                    })
+                  }) // Patients
               })
-            }) // Record
-            db.collection('record').where('id_patients', '==', idPaciente).get().then(function (querySnapshot) {
-              querySnapshot.forEach(function (doc) {
-                var medicina = (doc.id, ' => ', doc.data())
-                console.log(medicina)
-                // var x = document.createElement('p')
-                // var t = document.createTextNode(internado)
-                // x.appendChild(t)
-                // document.getElementById('infoPaciente').appendChild(x)
-              })
-            }) // Record
-          })
-        }) // Entry
-        // db.collection('patients').get().then(function (querySnapshot) {
-        //   querySnapshot.forEach(function (doc) {
-        //     var IDPaciente = (doc.id)
-        //     var doctor = doc.data().id_personal
-        //     var estatus = doc.data().id_status
-        //     var internado = 'Sí'
-        //     console.log(IDPaciente + '/' + doctor + '/' + estatus)
-        //     if (!doc.data().intership) {
-        //       internado = 'No'
-        //     }
-        //     // Imprimir si está internado
-        //     var x = document.createElement('p')
-        //     var t = document.createTextNode(' ' + internado)
-        //     x.appendChild(t)
-        //     document.getElementById('infoPaciente').appendChild(x)
-        //   })
-        // })
+            }) // Status
+          }) // Personal
+        })
       } else if (x === 'Familia') {
         db.collection('patients').get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
@@ -407,25 +484,25 @@ export default {
             var retiro = (doc.id, ' => ', doc.data().catering)
             var abastecer = (doc.id, ' => ', doc.data().retirement)
 
-            var a = document.createElement('td')
+            var a = document.createElement('tr')
             a.innerHTML = name
             document.getElementById('nombreFr').appendChild(a)
             var b = document.createElement('tr')
             document.getElementById('nombreFr').appendChild(b)
             // -------------------------------------------------------
-            var c = document.createElement('td')
+            var c = document.createElement('tr')
             c.innerHTML = existencia
             document.getElementById('stockFr').appendChild(c)
             var d = document.createElement('tr')
             document.getElementById('stockFr').appendChild(d)
             // --------------------------------------------------
-            var e = document.createElement('td')
+            var e = document.createElement('tr')
             e.innerHTML = retiro
             document.getElementById('retiroFr').appendChild(e)
             var f = document.createElement('tr')
             document.getElementById('retiroFr').appendChild(f)
             // --------------------------------------------------
-            var g = document.createElement('td')
+            var g = document.createElement('tr')
             g.innerHTML = abastecer
             document.getElementById('abasteFr').appendChild(g)
             var h = document.createElement('tr')

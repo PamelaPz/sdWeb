@@ -13,6 +13,7 @@
     "core-js": "^3.4.3",
     "firebase": "^7.5.0",
     "jquery": "^3.4.1",
+    "jspdf": "^1.5.3",
     "register-service-worker": "^1.6.2",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
@@ -39,9 +40,9 @@
     "vuetable-2": "^2.0.0-beta.4"
   },
   "eslintConfig": {
-    "root": true,
+    "root": false,
     "env": {
-      "node": true
+      "node": false
     },
     "extends": [
       "plugin:vue/essential",

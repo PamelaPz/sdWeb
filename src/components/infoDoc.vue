@@ -17,7 +17,7 @@
       <b-container>
         <h1 class="title">Información de Pacientes</h1>
         <p>Pacientes asignados</p>
-        <a href="#" @click="clickDatos">Ver Información</a>
+        <b-button @click="clickDatos" variant="success">Ver Información</b-button>
         <hr>
         <table style="width:100%" >
           <tr>
@@ -36,7 +36,6 @@
           </tr>
         </table>
         <hr>
-        <b-button type="button primary" onclick="javascript:window.print()">Imprimir</b-button>
       </b-container>
     </div>
   </div>
