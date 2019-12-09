@@ -34,8 +34,6 @@
             <td id="medicina"></td>
             <td id="observa"></td>
           </tr>
-          <tr>
-          </tr>
         </table>
         <hr>
         <b-button type="button primary" onclick="javascript:window.print()">Imprimir</b-button>

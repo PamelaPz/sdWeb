@@ -14,6 +14,7 @@
       <div id="familia">
         <b-container>
           <h1 class="title">Información del Familiar</h1>
+            <a href="#" @click="clickDatos">Ver Información</a>
           <hr>
           <table style="width:100%">
             <tr>
@@ -51,45 +52,45 @@ export default {
       userName: this.$route.params.name
     }
   },
-  mounted () {
-    var name = this.userName
-    document.getElementById('nameUser').innerHTML = name
-    console.log(name)
-
-    db.collection('patients').get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        var id = (doc.id)
-        db.collection('family').where('id_patients', '==', id).get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            var datos = (doc.id, ' => ', doc.data())
-            console.log(datos)
-            var namep = ''
-            var name = (doc.id, ' => ', doc.data().family_name)
-            var direccion = (doc.id, ' => ', doc.data().address)
-            var email = (doc.id, ' => ', doc.data().email)
-            var idpaciente = (doc.id, ' => ', doc.data().id_patients)
-
-            document.getElementById('name').innerHTML = name
-            document.getElementById('address').innerHTML = direccion
-            document.getElementById('email').innerHTML = email
-            namePaciente(idpaciente)
-            function namePaciente (x) {
-              db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                  namep = (doc.id, ' => ', doc.data().name)
-                  document.getElementById('patient').innerHTML = namep
-                })
-              }) // Entry
-            }
-          })
-        }) // Family
-      })
-    }) // Patients
-  },
   methods: {
     logout () {
       firebase.auth().signOut()
         .then(() => this.$router.replace('login'))
+    },
+    clickDatos () {
+      var name = this.userName
+      document.getElementById('nameUser').innerHTML = name
+      console.log(name)
+
+      db.collection('patients').get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          var id = (doc.id)
+          db.collection('family').where('id_patients', '==', id).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              var datos = (doc.id, ' => ', doc.data())
+              console.log(datos)
+              var namep = ''
+              var name = (doc.id, ' => ', doc.data().family_name)
+              var direccion = (doc.id, ' => ', doc.data().address)
+              var email = (doc.id, ' => ', doc.data().email)
+              var idpaciente = (doc.id, ' => ', doc.data().id_patients)
+
+              document.getElementById('name').innerHTML = name
+              document.getElementById('address').innerHTML = direccion
+              document.getElementById('email').innerHTML = email
+              namePaciente(idpaciente)
+              function namePaciente (x) {
+                db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    namep = (doc.id, ' => ', doc.data().name)
+                    document.getElementById('patient').innerHTML = namep
+                  })
+                }) // Entry
+              }
+            })
+          }) // Family
+        })
+      }) // Patients
     }
   }
 }

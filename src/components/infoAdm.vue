@@ -10,100 +10,131 @@
       </div>
       <hr>
     </div>
-    <div class="contenido">
-      <div role="tablist">
-        <b-card no-body class="mb-1">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block href="#" v-b-toggle.accordion-1 variant="info">Personal de Hospital</b-button>
-          </b-card-header>
-          <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-            <b-card-body>
-              <b-card-text>Selecciona una de las opciones a continuación para mostrar información necesaria</b-card-text>
-              <!-- <b-card-text>{{ text }}</b-card-text> -->
-
-              <b-button @click="clickToogle('Doctor')" v-b-toggle.collapse-1-inner size="sm" class="btn_inside" variant="outline-danger">Doctores</b-button>
-              <b-button @click="clickToogle('Enfermera')" v-b-toggle.collapse-2-inner size="sm" class="btn_inside" variant="outline-success">Enfermeras</b-button>
-              <b-button @click="clickToogle('Seguridad')" v-b-toggle.collapse-3-inner size="sm" class="btn_inside" variant="outline-dark">Seguridad</b-button>
-              <b-collapse id="collapse-1-inner" class="mt-2">
-                <b-card>
-                  <h5>Infomación de Doctores</h5>
-                  <div id="infoDoctores"></div>
-                </b-card>
-              </b-collapse>
-              <b-collapse id="collapse-2-inner" class="mt-2">
-                <b-card>
-                  <h5>Infomación de Enfermeras</h5>
-                  <div id="infoEnfermeras"></div>
-                </b-card>
-              </b-collapse>
-              <b-collapse id="collapse-3-inner" class="mt-2">
-                <b-card>
-                  <h5>Infomación de Seguridad</h5>
-                  <div id="infoSeguridad"></div>
-                </b-card>
-              </b-collapse>
-
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-
-        <b-card no-body class="mb-1">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button @click="clickToogle('Pacientes')" block href="#" v-b-toggle.accordion-2 variant="info">Pacientes</b-button>
-          </b-card-header>
-          <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-            <b-card-body>
-              <b-card-text>
-                <h5>Lista de Pacientes</h5>
-                <div id="infoPaciente"></div>
-              </b-card-text>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-
-        <b-card no-body class="mb-1">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button @click="clickToogle('Familia')" block href="#" v-b-toggle.accordion-3 variant="info">Familiares</b-button>
-          </b-card-header>
-          <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-            <b-card-body>
-              <b-card-text>
-                <h5>Lista de familiares registrados</h5>
-                <div id="familia"></div>
-              </b-card-text>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-
-        <b-card no-body class="mb-1">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button @click="clickToogle('Farmacia')" block href="#" v-b-toggle.accordion-4 variant="info">Farmacia</b-button>
-          </b-card-header>
-          <b-collapse id="accordion-4" accordion="my-accordion" role="tabpanel">
-            <b-card-body>
-              <b-card-text>
-                <h5>La Farmacia cuenta con los siguientes medicamentos con su respectiva información de retiro y abastecimiento.</h5>
-                <div id="farmacia"></div>
-              </b-card-text>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-
-        <b-card no-body class="mb-1">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button @click="clickToogle('Talleres')" block href="#" v-b-toggle.accordion-5 variant="info">Talleres</b-button>
-          </b-card-header>
-          <b-collapse id="accordion-5" accordion="my-accordion" role="tabpanel">
-            <b-card-body>
-              <b-card-text>
-                <h5>Talleres en existencia</h5>
-                <div id="talleres"></div>
-              </b-card-text>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
+    <b-container class="contenido">
+      <div class="section personal">
+        <h3>Personal</h3>
+        <p>Selecciona una de las opciones a continuación para mostrar información necesaria</p>
+        <h5>Infomación de Doctores</h5>
+        <b-button @click="clickToogle('Doctor')" variant="info">Ver Doctores</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+          </tr>
+          <tr>
+            <td id="nombreD"></td>
+            <td id="correoD"></td>
+          </tr>
+        </table>
+        <hr>
       </div>
-    </div>
+      <div class="section personal">
+        <h5>Infomación de Enfermeras</h5>
+        <b-button @click="clickToogle('Enfermera')" variant="warning">Ver Enfermeras</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+          </tr>
+          <tr>
+            <td id="nombreE"></td>
+            <td id="correoE"></td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+      <div class="section personal">
+        <h5>Infomación de Seguridad</h5>
+        <b-button @click="clickToogle('Seguridad')" variant="dark">Ver Seguridad</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+          </tr>
+          <tr>
+            <td id="nombreS"></td>
+            <td id="correoS"></td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+      <div class="section">
+        <h5>Lista de Pacientes</h5>
+        <b-button @click="clickToogle('Pacientes')">Pacientes</b-button>
+        <div id="infoPaciente"></div>
+      </div>
+      <div class="section">
+        <h3>Familiares</h3>
+        <b-button @click="clickToogle('Familia')" variant="primary">Ver Familiares</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre tutor</th>
+            <th>Dirección</th>
+            <th>Correo</th>
+            <th>Proxima Visita</th>
+            <th>Visita a</th>
+          </tr>
+          <tr>
+            <td id="nombreFm"></td>
+            <td id="addressFm"></td>
+            <td id="emailFm"></td>
+            <td id="fechaFm"></td>
+            <td id="visitaFm"></td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+      <div class="section">
+        <h3>Farmacia</h3>
+        <p>Los siguientes medicamentos se presentan con su respectiva información de retiro y abastecimiento.</p>
+        <b-button @click="clickToogle('Farmacia')" variant="danger">Ver Medicamentos</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Stock</th>
+            <th>Retiro</th>
+            <th>Abastecimiento</th>
+          </tr>
+          <tr>
+            <td id="nombreFr"></td>
+            <td id="stockFr"></td>
+            <td id="retiroFr"></td>
+            <td id="abasteFr"></td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+      <div class="section">
+        <h3>Talleres</h3>
+        <p>Historial de talleres registrados</p>
+        <b-button @click="clickToogle('Talleres')" variant="light">Ver Talleres</b-button>
+        <hr>
+        <table style="width:100%" >
+          <tr>
+            <th>Nombre</th>
+            <th>Conferencista</th>
+            <th>Ubicación o Área</th>
+            <th>Capacidad</th>
+            <th>Cantidad</th>
+            <th>Diriguido a</th>
+          </tr>
+          <tr>
+            <td id="nombreT"></td>
+            <td id="speakerT"></td>
+            <td id="locationT"></td>
+            <td id="capacidadT"></td>
+            <td id="cantidadT"></td>
+            <td id="publicT"></td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+    </b-container>
   </div>
 </template>
 
@@ -133,7 +164,6 @@ export default {
         querySnapshot.forEach(function (doc) {
           var name = doc.data().name
           document.getElementById('nameUser').innerHTML = name
-          console.log(name)
         })
       })
       .catch(function (error) {
@@ -154,10 +184,18 @@ export default {
             querySnapshot.forEach(function (doc) {
               var name = doc.data().name
               var email = doc.data().email
-              var x = document.createElement('p')
-              var t = document.createTextNode(name + ' | ' + email)
-              x.appendChild(t)
-              document.getElementById('infoDoctores').appendChild(x)
+              // -------------------------------------------------------
+              var x = document.createElement('td')
+              x.innerHTML = name
+              document.getElementById('nombreD').appendChild(x)
+              var z = document.createElement('tr')
+              document.getElementById('nombreD').appendChild(z)
+              // -------------------------------------------------------
+              var y = document.createElement('td')
+              y.innerHTML = email
+              document.getElementById('correoD').appendChild(y)
+              var w = document.createElement('tr')
+              document.getElementById('correoD').appendChild(w)
             })
           })
           .catch(function (error) {
@@ -171,10 +209,18 @@ export default {
             querySnapshot.forEach(function (doc) {
               var name = doc.data().name
               var email = doc.data().email
-              var x = document.createElement('p')
-              var t = document.createTextNode(name + ' | ' + email)
-              x.appendChild(t)
-              document.getElementById('infoEnfermeras').appendChild(x)
+              // -------------------------------------------------------
+              var x = document.createElement('td')
+              x.innerHTML = name
+              document.getElementById('nombreE').appendChild(x)
+              var z = document.createElement('tr')
+              document.getElementById('nombreE').appendChild(z)
+              // -------------------------------------------------------
+              var y = document.createElement('td')
+              y.innerHTML = email
+              document.getElementById('correoE').appendChild(y)
+              var w = document.createElement('tr')
+              document.getElementById('correoE').appendChild(w)
             })
           })
           .catch(function (error) {
@@ -188,10 +234,17 @@ export default {
             querySnapshot.forEach(function (doc) {
               var name = doc.data().name
               var email = doc.data().email
-              var x = document.createElement('p')
-              var t = document.createTextNode(name + ' | ' + email)
-              x.appendChild(t)
-              document.getElementById('infoSeguridad').appendChild(x)
+              var x = document.createElement('td')
+              x.innerHTML = name
+              document.getElementById('nombreS').appendChild(x)
+              var z = document.createElement('tr')
+              document.getElementById('nombreS').appendChild(z)
+              // -------------------------------------------------------
+              var y = document.createElement('td')
+              y.innerHTML = email
+              document.getElementById('correoS').appendChild(y)
+              var w = document.createElement('tr')
+              document.getElementById('correoS').appendChild(w)
             })
           })
           .catch(function (error) {
@@ -256,49 +309,43 @@ export default {
       } else if (x === 'Familia') {
         db.collection('patients').get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            var id = (doc.id)
-            db.collection('family').where('id_patients', '==', id).get().then(function (querySnapshot) {
+            var idPac = (doc.id)
+            db.collection('family').where('id_patients', '==', idPac).get().then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
                 var datos = (doc.id, ' => ', doc.data())
-                console.log(datos)
-                var namep = ''
                 var name = (doc.id, ' => ', doc.data().family_name)
                 var direccion = (doc.id, ' => ', doc.data().address)
                 var email = (doc.id, ' => ', doc.data().email)
-                var idpaciente = (doc.id, ' => ', doc.data().id_patients)
-
-                var x = document.createElement('tr')
-                var t = document.createTextNode('Nombre de tutor: ' + name)
-                x.appendChild(t)
-                document.getElementById('familia').appendChild(x)
-                // --------------------------------------------------
-                var a = document.createElement('tr')
-                var b = document.createTextNode('Dirección: ' + direccion)
-                a.appendChild(b)
-                document.getElementById('familia').appendChild(a)
-                // --------------------------------------------------
-                var c = document.createElement('tr')
-                var d = document.createTextNode('Correo: ' + email)
-                c.appendChild(d)
-                document.getElementById('familia').appendChild(c)
-                // --------------------------------------------------
-                namep = namePaciente(idpaciente)
-                var e = document.createElement('tr')
-                var f = document.createTextNode('Paciente a quien visita: ' + namep)
-                e.appendChild(f)
-                document.getElementById('familia').appendChild(e)
-                // --------------------------------------------------
-                var k = document.createElement('br')
-                document.getElementById('familia').appendChild(k)
-
-                function namePaciente (x) {
-                  db.collection('entry').where('id_patients', '==', x).get().then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                      namep = (doc.id, ' => ', doc.data().name)
-                      return namep
-                    })
-                  }) // Entry
-                }
+                console.log(datos)
+                db.collection('entry').where('id_patients', '==', idPac).get().then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    var nameP = doc.data().name
+                    var a = document.createElement('td')
+                    a.innerHTML = name
+                    document.getElementById('nombreFm').appendChild(a)
+                    var b = document.createElement('tr')
+                    document.getElementById('nombreFm').appendChild(b)
+                    // -------------------------------------------------------
+                    var c = document.createElement('td')
+                    c.innerHTML = direccion
+                    document.getElementById('addressFm').appendChild(c)
+                    var d = document.createElement('tr')
+                    document.getElementById('addressFm').appendChild(d)
+                    // --------------------------------------------------
+                    var e = document.createElement('td')
+                    e.innerHTML = email
+                    document.getElementById('emailFm').appendChild(e)
+                    var f = document.createElement('tr')
+                    document.getElementById('emailFm').appendChild(f)
+                    // --------------------------------------------------
+                    var g = document.createElement('td')
+                    g.innerHTML = nameP
+                    document.getElementById('visitaFm').appendChild(g)
+                    var h = document.createElement('tr')
+                    document.getElementById('visitaFm').appendChild(h)
+                    // --------------------------------------------------
+                  })
+                }) // Entry
               })
             }) // Family
           })
@@ -313,38 +360,42 @@ export default {
             var capacidad = (doc.id, ' => ', doc.data().capacity)
             var cantidad = (doc.id, ' => ', doc.data().quantity)
             var publico = (doc.id, ' => ', doc.data().public)
-            var x = document.createElement('tr')
-            var t = document.createTextNode('Título: ' + name)
-            x.appendChild(t)
-            document.getElementById('talleres').appendChild(x)
+
+            var a = document.createElement('td')
+            a.innerHTML = name
+            document.getElementById('nombreT').appendChild(a)
+            var b = document.createElement('tr')
+            document.getElementById('nombreT').appendChild(b)
+            // -------------------------------------------------------
+            var c = document.createElement('td')
+            c.innerHTML = orador
+            document.getElementById('speakerT').appendChild(c)
+            var d = document.createElement('tr')
+            document.getElementById('speakerT').appendChild(d)
             // --------------------------------------------------
-            var a = document.createElement('tr')
-            var b = document.createTextNode('Conferencista: ' + orador)
-            a.appendChild(b)
-            document.getElementById('talleres').appendChild(a)
+            var e = document.createElement('td')
+            e.innerHTML = ubicacion
+            document.getElementById('locationT').appendChild(e)
+            var f = document.createElement('tr')
+            document.getElementById('locationT').appendChild(f)
             // --------------------------------------------------
-            var c = document.createElement('tr')
-            var d = document.createTextNode('Ubicación: ' + ubicacion)
-            c.appendChild(d)
-            document.getElementById('talleres').appendChild(c)
+            var g = document.createElement('td')
+            g.innerHTML = capacidad
+            document.getElementById('capacidadT').appendChild(g)
+            var h = document.createElement('tr')
+            document.getElementById('capacidadT').appendChild(h)
             // --------------------------------------------------
-            var e = document.createElement('tr')
-            var f = document.createTextNode('Capacidad para ' + capacidad + ' personas')
-            e.appendChild(f)
-            document.getElementById('talleres').appendChild(e)
+            var i = document.createElement('td')
+            i.innerHTML = cantidad
+            document.getElementById('cantidadT').appendChild(i)
+            var j = document.createElement('tr')
+            document.getElementById('cantidadT').appendChild(j)
             // --------------------------------------------------
-            var g = document.createElement('tr')
-            var h = document.createTextNode('Cantidad: ' + cantidad)
-            g.appendChild(h)
-            document.getElementById('talleres').appendChild(g)
-            // --------------------------------------------------
-            var i = document.createElement('tr')
-            var j = document.createTextNode('Público diriguido: ' + publico)
-            i.appendChild(j)
-            document.getElementById('talleres').appendChild(i)
-            // --------------------------------------------------
-            var k = document.createElement('br')
-            document.getElementById('talleres').appendChild(k)
+            var k = document.createElement('td')
+            k.innerHTML = publico
+            document.getElementById('publicT').appendChild(k)
+            var l = document.createElement('tr')
+            document.getElementById('publicT').appendChild(l)
           })
         }) // Talleres
       } else if (x === 'Farmacia') {
@@ -356,30 +407,31 @@ export default {
             var retiro = (doc.id, ' => ', doc.data().catering)
             var abastecer = (doc.id, ' => ', doc.data().retirement)
 
-            var x = document.createElement('tr')
-            var t = document.createTextNode('Nombre: ' + name)
-            x.appendChild(t)
-            document.getElementById('farmacia').appendChild(x)
+            var a = document.createElement('td')
+            a.innerHTML = name
+            document.getElementById('nombreFr').appendChild(a)
+            var b = document.createElement('tr')
+            document.getElementById('nombreFr').appendChild(b)
+            // -------------------------------------------------------
+            var c = document.createElement('td')
+            c.innerHTML = existencia
+            document.getElementById('stockFr').appendChild(c)
+            var d = document.createElement('tr')
+            document.getElementById('stockFr').appendChild(d)
             // --------------------------------------------------
-            var a = document.createElement('tr')
-            var b = document.createTextNode('Existencias: ' + existencia)
-            a.appendChild(b)
-            document.getElementById('farmacia').appendChild(a)
+            var e = document.createElement('td')
+            e.innerHTML = retiro
+            document.getElementById('retiroFr').appendChild(e)
+            var f = document.createElement('tr')
+            document.getElementById('retiroFr').appendChild(f)
             // --------------------------------------------------
-            var c = document.createElement('tr')
-            var d = document.createTextNode('Retiro: ' + retiro)
-            c.appendChild(d)
-            document.getElementById('farmacia').appendChild(c)
-            // --------------------------------------------------
-            var e = document.createElement('tr')
-            var f = document.createTextNode('Abastecimiento de ' + abastecer)
-            e.appendChild(f)
-            document.getElementById('farmacia').appendChild(e)
-            // --------------------------------------------------
-            var k = document.createElement('br')
-            document.getElementById('farmacia').appendChild(k)
+            var g = document.createElement('td')
+            g.innerHTML = abastecer
+            document.getElementById('abasteFr').appendChild(g)
+            var h = document.createElement('tr')
+            document.getElementById('abasteFr').appendChild(h)
           })
-        }) // Talleres
+        }) // Farmacia
       }
     }
   }
@@ -428,6 +480,9 @@ export default {
   }
   h5 {
     padding-bottom: 10px;
+  }
+  .section {
+    margin-bottom: 8rem;
   }
 }
 </style>
