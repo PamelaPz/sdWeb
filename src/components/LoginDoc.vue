@@ -49,17 +49,8 @@ import firebase from 'firebase/app'
 const db = firebase.firestore(app)
 
 export default {
-  components: {
-    navbar
-  },
-  data () {
-    return {
-      form: {
-        email: '',
-        pass: '',
-        type: 'GPcuJQB3DMzUODMv1r6D'
-      }
-    }
+  components: { navbar },
+  data () { return { form: { email: '', pass: '', type: 'GPcuJQB3DMzUODMv1r6D' }}
   },
   methods: {
     onReset (evt) {

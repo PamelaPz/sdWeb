@@ -14,7 +14,7 @@
       <div id="familia">
         <b-container>
           <h1 class="title">Información del Familiar</h1>
-            <a href="#" @click="clickDatos">Ver Información</a>
+            <b-button @click="clickDatos" variant="success">Ver Información</b-button>
           <hr>
           <table style="width:100%">
             <tr>
@@ -52,16 +52,17 @@ export default {
       userName: this.$route.params.name
     }
   },
+  mounted () {
+    var name = this.userName
+    document.getElementById('nameUser').innerHTML = name
+    console.log(name)
+  },
   methods: {
     logout () {
       firebase.auth().signOut()
         .then(() => this.$router.replace('login'))
     },
     clickDatos () {
-      var name = this.userName
-      document.getElementById('nameUser').innerHTML = name
-      console.log(name)
-
       db.collection('patients').get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           var id = (doc.id)

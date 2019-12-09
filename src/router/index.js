@@ -2,7 +2,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import firebase from 'firebase/app'
 // Logins
 import LoginFam from '../components/LoginFam'
@@ -20,61 +19,18 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     // Redireccionamiento
-    {
-      path: '*',
-      redirect: '/login'
-    },
-    {
-      path: '/',
-      redirect: '/login'
-    },
+    { path: '*', redirect: '/login' },
+    { path: '/', redirect: '/login' },
     // Registro
-    {
-      path: '/registro',
-      name: 'Registro',
-      component: Registro
-    },
+    { path: '/registro', name: 'Registro', component: Registro },
     // Logins
-    {
-      path: '/login',
-      name: 'Login',
-      component: LoginAdm
-    },
-    {
-      path: '/doctor',
-      name: 'LoginDoctor',
-      component: LoginDoc
-    },
-    {
-      path: '/family',
-      name: 'LoginFamilia',
-      component: LoginFam
-    },
+    { path: '/login', name: 'Login', component: LoginAdm },
+    { path: '/doctor', name: 'LoginDoctor', component: LoginDoc },
+    { path: '/family', name: 'LoginFamilia', component: LoginFam },
     // Páginas principales
-    {
-      path: '/Fam',
-      name: 'Familia',
-      component: DashboardFm,
-      meta: {
-        autentificado: true
-      }
-    },
-    {
-      path: '/Adm',
-      name: 'Administrador',
-      component: DashboardAd,
-      meta: {
-        autentificado: true
-      }
-    },
-    {
-      path: '/Doc',
-      name: 'Doctor',
-      component: DashboardDo,
-      meta: {
-        autentificado: true
-      }
-    }
+    { path: '/Fam', name: 'Familia', component: DashboardFm, meta: { autentificado: true } },
+    { path: '/Adm', name: 'Administrador', component: DashboardAd, meta: { autentificado: true } },
+    { path: '/Doc', name: 'Doctor', component: DashboardDo, meta: { autentificado: true } }
   ]
 })
 

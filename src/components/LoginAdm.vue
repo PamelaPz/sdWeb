@@ -53,13 +53,7 @@ export default {
     navbar
   },
   data () {
-    return {
-      form: {
-        email: '',
-        pass: '',
-        type: 'oEz3LEWd3PAQzghOeVcs'
-      }
-    }
+    return { form: { email: '', pass: '', type: 'oEz3LEWd3PAQzghOeVcs' } }
   },
   methods: {
     onReset (evt) {

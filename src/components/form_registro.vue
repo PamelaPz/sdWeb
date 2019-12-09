@@ -42,12 +42,7 @@ const db = firebase.firestore(app)
 export default {
   data () {
     return {
-      form: {
-        email: '',
-        pass: '',
-        name: '',
-        selected: null
-      },
+      form: { email: '', pass: '', name: '', selected: null },
       options: [
         { value: 'GPcuJQB3DMzUODMv1r6D', text: 'Doctor' },
         { value: 'aGjQmNHJvvIXmtQBRETA', text: 'Enfermera(o)' },

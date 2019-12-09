@@ -5,12 +5,10 @@
   </b-container>
 </div>
 </template>
-
 <script>
 // @ is an alias to /src
 export default {}
 </script>
-
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -19,7 +17,6 @@ export default {}
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
   a {

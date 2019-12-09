@@ -45,20 +45,11 @@ import navbar from './navbar'
 import router from '../router'
 import { app } from '../firebase'
 import firebase from 'firebase/app'
-
 const db = firebase.firestore(app)
 
 export default {
-  components: {
-    navbar
-  },
-  data () {
-    return {
-      form: {
-        email: '',
-        pass: ''
-      }
-    }
+  components: { navbar },
+  data () { return {form: { email: '', pass: '' }}
   },
   methods: {
     onReset (evt) {

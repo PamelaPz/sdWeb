@@ -62,6 +62,20 @@ export default {
       key: false
     }
   },
+  mounted () {
+    const type = this.typeUser
+    db.collection('personal').where('id_personaltype', '==', type)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          var name = doc.data().name // Nombre de quién inicia sesión
+          document.getElementById('nameUser').innerHTML = name
+        })
+      })
+      .catch(function (error) {
+        console.log('Error getting document:', error)
+      })
+  },
   methods: {
     logout () {
       firebase.auth().signOut()
@@ -76,9 +90,7 @@ export default {
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            var name = doc.data().name // Nombre de quién inicia sesión
             var idDoc = doc.id
-            document.getElementById('nameUser').innerHTML = name
             if (idDoc === id) { // Si el id del usuario coincide
               db.collection('status').get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
