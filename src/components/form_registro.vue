@@ -70,8 +70,7 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.pass)
         .then(response => {
-          console.log(response)
-          db.collection('personal').doc(response.user.uid).set(docData)
+          db.collection('personal').doc(response.user.uid).set(docData, { merge: true })
         })
         .catch(errors => console.log(errors))
     },

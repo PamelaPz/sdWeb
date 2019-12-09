@@ -87,7 +87,7 @@ export default {
               console.log('Match exacto')
               firebase.auth()
                 .signInWithEmailAndPassword(email, pass)
-                .then((user) => router.push({ name: 'Doctor', params: { id: (doc.id), type: valid } }),
+                .then(response => router.push({ name: 'Doctor', params: { id: response.user.uid, type: valid } }),
                   (error) => alert('Datos incorrectos ', error))
             } else {
               alert('Datos incorrectos o perfil iválido')
